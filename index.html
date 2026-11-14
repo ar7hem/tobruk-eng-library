@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>المكتبة الإلكترونية السحابية | كلية الهندسة - جامعة طبرق</title>
+  <meta name="description" content="المنصة السحابية الرسمية للمراجع والكتب الهندسية والشيتات والامتحانات السابقة لطلبة كلية الهندسة - جامعة طبرق (تأسست 1991)." />
+  <meta name="author" content="م. عبدالرحمن سالم عمران" />
+
+  <!-- خطوط جوجل العربية: Cairo & Tajawal -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- مكتبة Tailwind CSS للتصميم المتجاوب -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              DEFAULT: '#0D254C',
+              dark: '#081833',
+              light: '#183C75',
+              soft: '#EEF3FA'
+            },
+            gold: {
+              DEFAULT: '#C88A2E',
+              light: '#E2A94B',
+              dark: '#9E691B',
+              soft: '#FDF7EC'
+            }
+          },
+          fontFamily: {
+            sans: ['Cairo', 'Tajawal', 'sans-serif'],
+            tajawal: ['Tajawal', 'Cairo', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #F8FAFC;
+      color: #0F172A;
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* إخفاء شريط التمرير الأفقي في القوائم المنسابة على الهواتف */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* خلفية هندسية احترافية للقسم العلوي */
+    .hero-blueprint {
+      background-color: #0D254C;
+      background-image:
+        radial-gradient(circle at 12% 30%, rgba(200, 138, 46, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 88% 75%, rgba(255, 255, 255, 0.07) 0%, transparent 42%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 26px 26px, 26px 26px;
+    }
+
+    /* تأثيرات بطاقات الكتب */
+    .book-card {
+      transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+    .book-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 30px -10px rgba(13, 37, 76, 0.14);
+      border-color: rgba(200, 138, 46, 0.55);
+    }
+
+    /* حركة ظهور النوافذ المنبثقة */
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.96) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-pop {
+      animation: modalPop 0.2s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-gold selection:text-white">
+
+  <!-- ==================== الشريط العلوي (Navbar) ==================== -->
+  <header class="sticky top-0 z-40 bg-navy/95 backdrop-blur-md border-b border-white/10 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap items-center justify-between py-3 gap-3">
+
+        <!-- الشعار الرسمي للكلية + العنوان + توثيق المهندس -->
+        <div class="flex items-center gap-3 sm:gap-4 min-w-0">
+          <!-- حاوية الشعار: تقرأ logo.jpg أو logo.png إن وُجدت بجانب الملف، وإلا تعرض الشعار الرسمي المرسوم بدقة -->
+          <div class="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white p-0.5 shadow-lg ring-2 ring-gold flex items-center justify-center shrink-0 overflow-hidden">
+            <img
+              id="header-logo-img"
+              src="logo.jpg"
+              alt="شعار كلية الهندسة - جامعة طبرق 1991"
+              class="w-full h-full object-contain rounded-full"
+              onerror="if(!this.dataset.triedPng){this.dataset.triedPng='1';this.src='logo.png';}else{this.style.display='none';document.getElementById('header-logo-svg').classList.remove('hidden');}"
+            />
+
+            <!-- شعار SVG عالي الدقة مطابق للختم الرسمي لكلية الهندسة - جامعة طبرق 1991 -->
+            <svg id="header-logo-svg" class="hidden w-full h-full" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-label="شعار كلية الهندسة - جامعة طبرق 1991">
+              <defs>
+                <!-- مسار النص العربي العلوي -->
+                <path id="sealTopArabic" d="M 30,120 A 90,90 0 1,1 210,120" />
+                <!-- مسار النص الإنجليزي السفلي -->
+                <path id="sealBottomEnglish" d="M 24,120 A 96,96 0 0,0 216,120" />
+                <!-- مسار سنة التأسيس 1991 -->
+                <path id="sealYearArc" d="M 76,68 A 62,62 0 0,1 164,68" />
+              </defs>
+
+              <!-- الإطار الذهبي الخارجي والخلفية البيضاء -->
+              <circle cx="120" cy="120" r="115" fill="#FFFFFF" stroke="#C88A2E" stroke-width="6" />
+              <circle cx="120" cy="120" r="82" fill="none" stroke="#0D254C" stroke-width="1.2" stroke-opacity="0.25" />
+
+              <!-- النص العربي: كلية الهندسة - جامعة طبرق -->
+              <text fill="#0D254C" font-family="Cairo, sans-serif" font-weight="900" font-size="16.5">
+                <textPath href="#sealTopArabic" startOffset="50%" text-anchor="middle">كلية الهندسة - جامعة طبرق</textPath>
+              </text>
+
+              <!-- النص الإنجليزي: FACULTY OF ENGINEERING - TOBRUK UNIVERSITY -->
+              <text fill="#0D254C" font-family="Cairo, sans-serif" font-weight="800" font-size="10.2" letter-spacing="0.6">
+                <textPath href="#sealBottomEnglish" startOffset="50%" text-anchor="middle">FACULTY OF ENGINEERING - TOBRUK UNIVERSITY</textPath>
+              </text>
+
+              <!-- أيقونة الذرة يمين ويسار -->
+              <g transform="translate(22, 120)" stroke="#C88A2E" stroke-width="1.4" fill="none">
+                <ellipse rx="10" ry="4" />
+                <ellipse rx="10" ry="4" transform="rotate(60)" />
+                <ellipse rx="10" ry="4" transform="rotate(120)" />
+                <circle r="1.8" fill="#C88A2E" />
+              </g>
+              <g transform="translate(218, 120)" stroke="#C88A2E" stroke-width="1.4" fill="none">
+                <ellipse rx="10" ry="4" />
+                <ellipse rx="10" ry="4" transform="rotate(60)" />
+                <ellipse rx="10" ry="4" transform="rotate(120)" />
+                <circle r="1.8" fill="#C88A2E" />
+              </g>
+
+              <!-- سنة التأسيس 1991 -->
+              <text fill="#0D254C" font-family="JetBrains Mono, monospace" font-weight="800" font-size="12" letter-spacing="2">
+                <textPath href="#sealYearArc" startOffset="50%" text-anchor="middle">1991</textPath>
+              </text>
+
+              <!-- أسنان الترس الذهبي -->
+              <g fill="#C88A2E">
+                <rect x="114" y="42" width="12" height="10" rx="1.5" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(22.5 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(45 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(67.5 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(90 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(112.5 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(135 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(157.5 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(180 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(202.5 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(225 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(247.5 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(270 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(292.5 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(315 120 120)" />
+                <rect x="114" y="42" width="12" height="10" rx="1.5" transform="rotate(337.5 120 120)" />
+              </g>
+
+              <!-- جسم الترس الذهبي والدائرة الداخلية الكحلية -->
+              <circle cx="120" cy="120" r="71" fill="#C88A2E" />
+              <circle cx="120" cy="120" r="63" fill="#FFFFFF" />
+              <circle cx="120" cy="120" r="60" fill="#0D254C" />
+
+              <!-- خطوط تقسيم القطاعات الهندسية الستة -->
+              <g stroke="#FFFFFF" stroke-width="2.2">
+                <line x1="120" y1="60" x2="120" y2="180" />
+                <line x1="68" y1="90" x2="172" y2="150" />
+                <line x1="68" y1="150" x2="172" y2="90" />
+              </g>
+
+              <!-- 1. قطاع الهندسة النفطية (أعلى يسار): مضخة نفط -->
+              <g stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="82" y1="101" x2="114" y2="101" />
+                <polyline points="94,101 100,82 106,101" />
+                <line x1="90" y1="86" x2="110" y2="76" stroke-width="2.5" />
+                <path d="M109,71 Q115,75 111,83 Z" fill="#FFFFFF" />
+                <line x1="88" y1="87" x2="88" y2="101" />
+              </g>
+
+              <!-- 2. قطاع الهندسة الكهربائية والاتصالات (أعلى يمين): صاعقة وطبق أقمار -->
+              <g stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="134,70 146,70 138,83 147,83 131,102 135,88 127,88" />
+                <path d="M126,77 A7,7 0 0,0 134,83" />
+                <line x1="130" y1="80" x2="134" y2="76" />
+              </g>
+
+              <!-- 3. قطاع الهندسة الكيميائية (يمين وسط): أبراج تقطير وأنابيب -->
+              <g stroke="#FFFFFF" stroke-width="1.8" fill="none">
+                <rect x="155" y="106" width="7" height="25" rx="2" />
+                <rect x="165" y="111" width="6" height="20" rx="2" />
+                <circle cx="150" cy="125" r="4" />
+                <line x1="145" y1="131" x2="175" y2="131" />
+                <polyline points="158,106 158,102 168,102 168,111" />
+              </g>
+
+              <!-- 4. قطاع الميكانيكا والميكاترونكس (أسفل يمين): ذراع روبوت وترس -->
+              <g stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="127,164 134,146 146,152" />
+                <circle cx="134" cy="146" r="2.2" fill="#FFFFFF" />
+                <circle cx="143" cy="161" r="5" />
+                <line x1="149" y1="154" x2="156" y2="154" />
+              </g>
+
+              <!-- 5. قطاع الهندسة المعمارية (أسفل يسار): مباني ومثلث هندسي -->
+              <g stroke="#FFFFFF" stroke-width="1.8" fill="none">
+                <rect x="87" y="148" width="8" height="18" />
+                <rect x="97" y="142" width="8" height="24" />
+                <polygon points="107,166 116,166 116,151" />
+              </g>
+
+              <!-- 6. قطاع الهندسة المدنية (يسار وسط): جسر مقوس ومنزل -->
+              <g stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round">
+                <path d="M66,129 Q83,114 98,129" />
+                <line x1="65" y1="129" x2="99" y2="129" />
+                <polyline points="73,115 79,109 85,115" />
+                <rect x="75" y="115" width="8" height="6" />
+              </g>
+            </svg>
+          </div>
+
+          <div class="min-w-0">
+            <div class="flex items-center gap-2 flex-wrap">
+              <h1 class="text-white font-black text-base sm:text-xl tracking-tight truncate">
+                المكتبة الإلكترونية لكلية الهندسة
+              </h1>
+              <span class="hidden lg:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-gold/20 text-gold-light border border-gold/40">
+                جامعة طبرق • 1991
+              </span>
+            </div>
+            <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-0.5 text-xs sm:text-sm">
+              <span class="text-slate-300">المنصة السحابية للمراجع والشيتات</span>
+              <span class="text-gold-light hidden sm:inline">•</span>
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-white/10 text-gold-light font-bold text-[11px] sm:text-xs border border-gold/30">
+                إعداد وتطوير: م. عبدالرحمن سالم عمران
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- مؤشر الحالة السحابية الحي + زر لوحة الإدارة -->
+        <div class="flex items-center gap-2 sm:gap-3 mr-auto sm:mr-0">
+          <!-- شارة الاتصال السحابي -->
+          <div
+            id="cloud-status-pill"
+            class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-400/40 text-xs font-bold text-amber-200 transition-all"
+          >
+            <span id="cloud-status-dot" class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse shrink-0"></span>
+            <span id="cloud-status-label">جاري الاتصال بالسحابة...</span>
+          </div>
+
+          <!-- زر لوحة إدارة المكتبة السحابية -->
+          <button
+            id="btn-open-admin"
+            type="button"
+            class="flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-gold hover:bg-gold-light text-navy-dark font-extrabold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer"
+          >
+            <svg id="admin-lock-icon" class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <span class="hidden sm:inline">لوحة إدارة المكتبة</span>
+            <span class="sm:hidden">المشرف</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== تنبيه إرشادي في حال لم يُفعّل Firestore أو Anonymous Auth بعد ==================== -->
+  <div id="firebase-troubleshoot-banner" class="hidden bg-amber-50 border-b-2 border-amber-300 text-amber-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div class="flex items-start gap-3">
+          <div class="w-9 h-9 rounded-xl bg-amber-200/80 text-amber-900 flex items-center justify-center shrink-0 mt-0.5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <div class="text-xs sm:text-sm space-y-1">
+            <p class="font-extrabold text-amber-950" id="troubleshoot-title">
+              تنبيه: المزامنة السحابية تنتظر تفعيل قاعدة البيانات في Firebase Console
+            </p>
+            <p class="text-amber-900 leading-relaxed" id="troubleshoot-steps">
+              لإتمام الربط السحابي لمشروع <strong class="font-mono">tobruk-library</strong>: افتح لوحة Firebase وفعّل <strong>Cloud Firestore</strong> بوضع <strong>Start in test mode</strong>، ثم من قسم <strong>Authentication</strong> فعّل خيار <strong>Anonymous</strong>.
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0 self-end md:self-center">
+          <button
+            id="btn-retry-cloud"
+            type="button"
+            class="px-3.5 py-2 rounded-xl bg-navy hover:bg-navy-light text-white text-xs font-bold transition-colors cursor-pointer"
+          >
+            إعادة فحص الاتصال
+          </button>
+          <button
+            id="btn-dismiss-troubleshoot"
+            type="button"
+            class="px-3 py-2 rounded-xl bg-amber-200/70 hover:bg-amber-200 text-amber-950 text-xs font-bold transition-colors cursor-pointer"
+          >
+            إخفاء
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== القسم الترحيبي وشريط البحث الفوري (Hero) ==================== -->
+  <section class="hero-blueprint text-white pt-7 pb-10 sm:pt-10 sm:pb-12 border-b-4 border-gold">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/15 text-gold-light text-xs font-bold mb-3.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+          </svg>
+          <span>مزامنة سحابية فورية لجميع الطلبة — كلية الهندسة جامعة طبرق</span>
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-snug">
+          المكتبة الرقمية الشاملة للمراجع <span class="text-gold-light">والشيتات الهندسية</span>
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base mt-2.5 leading-relaxed">
+          تصفّح وحمّل الكتب المنهجية، المحاضرات، الامتحانات السابقة، وتقارير المعامل مرتبة بدقة حسب القسم العلمي والسمستر الدراسي.
+        </p>
+
+        <!-- شريط البحث الفوري -->
+        <div class="mt-6 relative max-w-2xl mx-auto">
+          <div class="relative flex items-center">
+            <span class="absolute right-4 text-slate-400 pointer-events-none">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
+              </svg>
+            </span>
+            <input
+              id="search-input"
+              type="text"
+              placeholder="ابحث برمز المادة (مثل GS101 أو ME201)، اسم المقرر، عنوان الكتاب، أو اسم الدكتور..."
+              class="w-full pr-12 pl-12 py-3.5 sm:py-4 rounded-2xl bg-white text-slate-900 placeholder-slate-400 text-sm sm:text-base font-medium shadow-xl border-2 border-transparent focus:border-gold focus:outline-none transition-all"
+            />
+            <button
+              id="btn-clear-search"
+              type="button"
+              title="مسح البحث"
+              class="hidden absolute left-3 p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- إحصائيات سريعة -->
+        <div class="mt-6 grid grid-cols-3 gap-2.5 sm:gap-4 max-w-xl mx-auto">
+          <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl py-2.5 px-3">
+            <div id="stat-total-books" class="text-xl sm:text-2xl font-black text-gold-light font-mono">0</div>
+            <div class="text-[11px] sm:text-xs text-slate-300 font-semibold">مرجعاً وكتاباً</div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl py-2.5 px-3">
+            <div class="text-xl sm:text-2xl font-black text-white font-mono">8</div>
+            <div class="text-[11px] sm:text-xs text-slate-300 font-semibold">أقسام علمية</div>
+          </div>
+          <div class="bg-white/10 backdrop-blur-sm border border-white/10 rounded-2xl py-2.5 px-3">
+            <div class="text-xl sm:text-2xl font-black text-emerald-400 font-mono">1 - 9</div>
+            <div class="text-[11px] sm:text-xs text-slate-300 font-semibold">السمسترات</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== المحتوى الرئيسي: الأقسام، السمسترات، والكتب ==================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+
+    <!-- تنبيه خفيف في حال عرض الباقة التمهيدية قبل رفع الكتب للسحابة -->
+    <div id="starter-mode-notice" class="hidden mb-5 bg-navy-soft border border-navy/15 rounded-2xl px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs sm:text-sm">
+      <div class="flex items-center gap-2.5 text-navy font-semibold">
+        <span class="w-2.5 h-2.5 rounded-full bg-gold shrink-0"></span>
+        <span>المكتبة السحابية متصلة وجاهزة! يتم عرض باقة الكتب التمهيدية حالياً — يمكن للمشرف رفعها للسحابة أو إضافة كتب جديدة من <strong>لوحة إدارة المكتبة</strong>.</span>
+      </div>
+    </div>
+
+    <!-- 1. الأقسام الهندسية الثمانية + الكل -->
+    <section aria-label="الأقسام الهندسية" class="mb-6">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-sm sm:text-base font-extrabold text-navy flex items-center gap-2">
+          <span class="w-2 h-5 rounded-full bg-gold inline-block"></span>
+          <span>الأقسام العلمية بكلية الهندسة</span>
+        </h3>
+        <span class="text-xs text-slate-500 font-medium">اختر القسم للتصفية</span>
+      </div>
+
+      <div id="departments-container" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+        <!-- تملأ ديناميكياً بالعدادات -->
+      </div>
+    </section>
+
+    <!-- 2. تصفية حسب السمستر (1 إلى 9) ونوع المرجع -->
+    <section aria-label="تصفية السمستر ونوع المرجع" class="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-4 mb-6 space-y-4">
+      <div>
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs sm:text-sm font-extrabold text-navy flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-gold" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <span>السمستر الدراسي:</span>
+          </span>
+          <span class="text-[11px] text-slate-500">عدد المراجع المتوفرة لكل سمستر</span>
+        </div>
+        <div id="semesters-container" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+          <!-- أزرار السمسترات -->
+        </div>
+      </div>
+
+      <hr class="border-slate-100" />
+
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div id="types-container" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 md:pb-0">
+          <!-- أزرار أنواع المراجع -->
+        </div>
+
+        <div class="flex items-center gap-2 self-end md:self-auto shrink-0">
+          <label for="sort-select" class="text-xs font-bold text-slate-500">ترتيب العرض:</label>
+          <select
+            id="sort-select"
+            class="text-xs font-bold text-navy bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 focus:outline-none focus:border-gold cursor-pointer"
+          >
+            <option value="newest">الأحدث إضافة</option>
+            <option value="semester_asc">السمستر (1 ← 9)</option>
+            <option value="code_asc">رمز المادة (A ← Z)</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. شريط نتائج العرض وإعادة الضبط -->
+    <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+      <div class="flex items-center gap-2">
+        <h3 id="results-heading" class="text-base sm:text-lg font-extrabold text-navy">جميع المراجع الهندسية</h3>
+        <span id="results-count-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-navy text-white font-mono">0</span>
+      </div>
+
+      <button
+        id="btn-reset-filters"
+        type="button"
+        class="hidden text-xs font-bold text-gold-dark hover:text-navy bg-gold-soft hover:bg-gold/25 px-3.5 py-2 rounded-xl transition-colors items-center gap-1.5 cursor-pointer"
+      >
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+        <span>إعادة ضبط الفلاتر</span>
+      </button>
+    </div>
+
+    <!-- 4. شبكة عرض الكتب والمراجع -->
+    <div id="books-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- يتم توليد البطاقات هنا -->
+    </div>
+
+    <!-- حالة عدم وجود نتائج -->
+    <div id="empty-state" class="hidden bg-white rounded-3xl border border-slate-200 p-10 text-center max-w-lg mx-auto my-8 shadow-sm">
+      <div class="w-16 h-16 rounded-2xl bg-navy-soft text-navy flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      </div>
+      <h4 class="text-lg font-extrabold text-navy">لا توجد مراجع مطابقة لخيارات البحث</h4>
+      <p class="text-sm text-slate-500 mt-1.5">جرّب اختيار قسم أو سمستر آخر أو مسح نص البحث لعرض جميع المراجع المتوفرة.</p>
+      <button
+        id="btn-empty-reset"
+        type="button"
+        class="mt-5 px-5 py-2.5 rounded-xl bg-navy hover:bg-navy-light text-white text-sm font-bold transition-colors cursor-pointer"
+      >
+        عرض كل المراجع
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ==================== تذييل الصفحة (Footer) ==================== -->
+  <footer class="bg-navy-dark text-slate-300 border-t-4 border-gold mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+
+        <div class="flex items-center gap-3.5 text-center md:text-right">
+          <div class="w-12 h-12 rounded-full bg-white p-0.5 shrink-0 flex items-center justify-center overflow-hidden ring-2 ring-gold/60">
+            <img
+              src="logo.jpg"
+              alt="شعار كلية الهندسة"
+              class="w-full h-full object-contain rounded-full"
+              onerror="if(!this.dataset.triedPng){this.dataset.triedPng='1';this.src='logo.png';}else{this.style.display='none';this.nextElementSibling.classList.remove('hidden');}"
+            />
+            <svg class="hidden w-full h-full" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="60" cy="60" r="56" fill="#0D254C" stroke="#C88A2E" stroke-width="5" />
+              <circle cx="60" cy="60" r="35" fill="#FFFFFF" stroke="#C88A2E" stroke-width="3" />
+              <circle cx="60" cy="60" r="28" fill="#0D254C" />
+              <text x="60" y="65" text-anchor="middle" fill="#E2A94B" font-family="JetBrains Mono, monospace" font-weight="800" font-size="16">1991</text>
+            </svg>
+          </div>
+          <div>
+            <p class="text-white font-extrabold text-base">كلية الهندسة — جامعة طبرق (تأسست 1991)</p>
+            <p class="text-xs text-slate-400 mt-0.5">المكتبة الإلكترونية السحابية لخدمة طلبة وأعضاء هيئة التدريس بالكلية</p>
+          </div>
+        </div>
+
+        <!-- توثيق الإعداد والتطوير -->
+        <div class="bg-white/5 border border-gold/30 rounded-2xl px-5 py-3 text-center md:text-left shadow-inner">
+          <p class="text-xs text-slate-400">إعداد وتصميم وتطوير المنصة السحابية</p>
+          <p class="text-sm sm:text-base font-black text-gold-light mt-0.5">م. عبدالرحمن سالم عمران</p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== نافذة تسجيل دخول المشرف (PIN Modal) ==================== -->
+  <div id="pin-modal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="modal-pop bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl border border-slate-200">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-navy text-gold flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-extrabold text-navy">دخول المشرف</h3>
+            <p class="text-xs text-slate-500">لوحة إدارة المكتبة السحابية</p>
+          </div>
+        </div>
+        <button type="button" id="btn-close-pin" class="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form id="pin-form" class="space-y-4">
+        <div>
+          <label for="admin-pin-input" class="block text-xs font-bold text-slate-700 mb-1.5">رمز مرور المشرف (PIN)</label>
+          <input
+            id="admin-pin-input"
+            type="password"
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="••••"
+            class="w-full text-center tracking-[0.5em] font-mono text-xl font-bold py-3 px-4 rounded-2xl border-2 border-slate-200 focus:border-gold focus:outline-none bg-slate-50"
+            required
+          />
+          <p class="text-[11px] text-slate-500 mt-2 text-center bg-slate-50 py-1.5 px-2 rounded-xl border border-slate-100">
+            الرمز الافتراضي عند التشغيل الأول: <span class="font-mono font-extrabold text-navy">1991</span> (يمكنك تغييره من الداخل)
+          </p>
+        </div>
+
+        <p id="pin-error-msg" class="hidden text-xs font-bold text-red-600 bg-red-50 border border-red-200 rounded-xl py-2 px-3 text-center">
+          رمز المرور غير صحيح، يرجى المحاولة مرة أخرى.
+        </p>
+
+        <div class="flex items-center gap-2.5 pt-1">
+          <button
+            type="submit"
+            class="flex-1 py-3 rounded-2xl bg-navy hover:bg-navy-light text-white font-extrabold text-sm shadow-md transition-all cursor-pointer"
+          >
+            فتح لوحة الإدارة
+          </button>
+          <button
+            type="button"
+            id="btn-cancel-pin"
+            class="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition-colors cursor-pointer"
+          >
+            إلغاء
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== لوحة إدارة المكتبة السحابية (Cloud Admin Dashboard) ==================== -->
+  <div id="admin-modal" class="hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+    <div class="modal-pop bg-white rounded-3xl max-w-5xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden my-auto">
+
+      <!-- رأس لوحة الإدارة -->
+      <div class="bg-navy text-white px-5 py-4 flex items-center justify-between border-b-2 border-gold shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gold text-navy-dark flex items-center justify-center font-black shrink-0">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base sm:text-lg font-extrabold">لوحة إدارة المكتبة السحابية</h3>
+            <p class="text-xs text-gold-light">أي كتاب أو شيت تضيفه هنا يُنشر لحظياً لجميع الطلبة</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            id="btn-admin-logout"
+            class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-red-500/80 text-white text-xs font-bold transition-colors cursor-pointer"
+          >
+            قفل الجلسة
+          </button>
+          <button
+            type="button"
+            id="btn-close-admin"
+            class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- تبويبات لوحة الإدارة -->
+      <div class="bg-slate-100 px-4 pt-3 border-b border-slate-200 flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0">
+        <button type="button" data-admin-tab="form" class="admin-tab-btn px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-extrabold bg-white text-navy border-t-2 border-gold shadow-sm whitespace-nowrap cursor-pointer">
+          + إضافة / تعديل مرجع
+        </button>
+        <button type="button" data-admin-tab="manage" class="admin-tab-btn px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-navy whitespace-nowrap cursor-pointer">
+          إدارة المراجع السحابية (<span id="admin-manage-count">0</span>)
+        </button>
+        <button type="button" data-admin-tab="backup" class="admin-tab-btn px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-navy whitespace-nowrap cursor-pointer">
+          النسخ الاحتياطي ورمز المشرف
+        </button>
+      </div>
+
+      <!-- محتوى لوحة الإدارة -->
+      <div class="p-5 sm:p-6 overflow-y-auto flex-1 space-y-6">
+
+        <!-- التبويب 1: نموذج إضافة أو تعديل كتاب/شيت في Firestore -->
+        <div id="admin-tab-form" class="admin-tab-panel">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <h4 id="form-mode-title" class="text-base font-extrabold text-navy">إضافة كتاب أو شيت جديد إلى السحابة</h4>
+            <button type="button" id="btn-cancel-edit" class="hidden text-xs font-bold text-red-600 hover:underline cursor-pointer">
+              إلغاء التعديل والعودة للإضافة
+            </button>
+          </div>
+
+          <form id="resource-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <input type="hidden" id="edit-resource-id" value="" />
+
+            <div>
+              <label for="res-dept" class="block text-xs font-bold text-slate-700 mb-1">القسم الهندسي *</label>
+              <select id="res-dept" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:border-gold focus:outline-none bg-slate-50">
+                <!-- تملأ تلقائياً من قائمة الأقسام -->
+              </select>
+            </div>
+
+            <div>
+              <label for="res-semester" class="block text-xs font-bold text-slate-700 mb-1">السمستر الدراسي *</label>
+              <select id="res-semester" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:border-gold focus:outline-none bg-slate-50">
+                <option value="1">السمستر 1</option>
+                <option value="2">السمستر 2</option>
+                <option value="3">السمستر 3</option>
+                <option value="4">السمستر 4</option>
+                <option value="5">السمستر 5</option>
+                <option value="6">السمستر 6</option>
+                <option value="7">السمستر 7</option>
+                <option value="8">السمستر 8</option>
+                <option value="9">السمستر 9 (التخرج)</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="res-type" class="block text-xs font-bold text-slate-700 mb-1">نوع المرجع *</label>
+              <select id="res-type" required class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:border-gold focus:outline-none bg-slate-50">
+                <option value="textbook">كتاب منهجي</option>
+                <option value="sheets">شيتات ومحاضرات</option>
+                <option value="exams">امتحانات سابقة</option>
+                <option value="labs">معامل وتقارير</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="res-code" class="block text-xs font-bold text-slate-700 mb-1">رمز المقرر (Course Code) *</label>
+              <input id="res-code" type="text" required placeholder="مثال: GS101 أو ME201" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm font-mono uppercase text-slate-800 focus:border-gold focus:outline-none bg-slate-50" />
+            </div>
+
+            <div>
+              <label for="res-course-name" class="block text-xs font-bold text-slate-700 mb-1">اسم المادة / المقرر الدراسي *</label>
+              <input id="res-course-name" type="text" required placeholder="مثال: التفاضل والتكامل 1" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:border-gold focus:outline-none bg-slate-50" />
+            </div>
+
+            <div>
+              <label for="res-title" class="block text-xs font-bold text-slate-700 mb-1">عنوان الكتاب أو الشيت *</label>
+              <input id="res-title" type="text" required placeholder="مثال: Calculus Early Transcendentals - 8th Ed" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:border-gold focus:outline-none bg-slate-50" />
+            </div>
+
+            <div>
+              <label for="res-author" class="block text-xs font-bold text-slate-700 mb-1">اسم المؤلف / أستاذ المادة</label>
+              <input id="res-author" type="text" placeholder="مثال: James Stewart • د. سالم مفتاح" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:border-gold focus:outline-none bg-slate-50" />
+            </div>
+
+            <div>
+              <label for="res-url" class="block text-xs font-bold text-slate-700 mb-1">الرابط المباشر (Google Drive / PDF / Telegram) *</label>
+              <input id="res-url" type="url" required placeholder="https://drive.google.com/file/d/..." dir="ltr" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm font-mono text-left text-slate-800 focus:border-gold focus:outline-none bg-slate-50" />
+            </div>
+
+            <div class="sm:col-span-2">
+              <label for="res-notes" class="block text-xs font-bold text-slate-700 mb-1">ملاحظات ووصف المرجع للطلبة</label>
+              <textarea id="res-notes" rows="2" placeholder="مثال: نسخه PDF واضحة تشمل الشرح والأمثلة المحلولة..." class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-sm text-slate-800 focus:border-gold focus:outline-none bg-slate-50"></textarea>
+            </div>
+
+            <div class="sm:col-span-2 flex flex-wrap items-center justify-between gap-3 pt-2">
+              <p class="text-xs text-slate-500">تأكد في Google Drive من تفعيل خيار <strong class="text-navy">«أي شخص لديه الرابط»</strong>.</p>
+              <button
+                id="btn-submit-resource"
+                type="submit"
+                class="w-full sm:w-auto px-6 py-3 rounded-2xl bg-navy hover:bg-navy-light text-white font-extrabold text-sm shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <svg class="w-5 h-5 text-gold-light" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+                <span id="btn-submit-label">نشر المرجع في السحابة الآن</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- التبويب 2: إدارة المراجع الموجودة ورفع الكتب التمهيدية -->
+        <div id="admin-tab-manage" class="admin-tab-panel hidden space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-navy-soft/70 p-3.5 rounded-2xl border border-navy/10">
+            <input
+              id="admin-search-input"
+              type="text"
+              placeholder="ابحث بالاسم، رمز المقرر، أو الأستاذ..."
+              class="w-full sm:w-80 rounded-xl border border-slate-300 px-3.5 py-2 text-sm bg-white focus:border-gold focus:outline-none"
+            />
+            <button
+              id="btn-upload-starter-books"
+              type="button"
+              class="px-4 py-2.5 rounded-xl bg-gold hover:bg-gold-light text-navy-dark font-extrabold text-xs sm:text-sm shadow-sm transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <span>رفع الكتب التمهيدية إلى السحابة</span>
+            </button>
+          </div>
+
+          <div id="admin-resources-list" class="space-y-2.5 max-h-[52vh] overflow-y-auto pr-1">
+            <!-- قائمة الكتب للمشرف -->
+          </div>
+        </div>
+
+        <!-- التبويب 3: النسخ الاحتياطي وتغيير رمز المشرف -->
+        <div id="admin-tab-backup" class="admin-tab-panel hidden space-y-6">
+          <!-- تصدير واستيراد JSON -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-3">
+            <h4 class="text-sm sm:text-base font-extrabold text-navy">النسخ الاحتياطي والاستيراد الجماعي (JSON)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">يمكنك تنزيل نسخة احتياطية كاملة من جميع مراجع المكتبة على هاتفك أو جهازك، أو استيراد ملف JSON لرفع مجموعة كتب دفعة واحدة إلى السحابة.</p>
+            <div class="flex flex-wrap items-center gap-3 pt-1">
+              <button
+                type="button"
+                id="btn-export-json"
+                class="px-4 py-2.5 rounded-xl bg-navy hover:bg-navy-light text-white font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer"
+              >
+                <svg class="w-4 h-4 text-gold-light" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                <span>تصدير نسخة احتياطية (JSON)</span>
+              </button>
+
+              <label class="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-navy border border-slate-300 font-bold text-xs sm:text-sm flex items-center gap-2 cursor-pointer">
+                <svg class="w-4 h-4 text-gold-dark" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
+                <span>استيراد ملف JSON إلى السحابة</span>
+                <input id="input-import-json" type="file" accept=".json,application/json" class="hidden" />
+              </label>
+            </div>
+          </div>
+
+          <!-- تغيير رمز مرور المشرف في Firestore -->
+          <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-3">
+            <h4 class="text-sm sm:text-base font-extrabold text-navy">تغيير رمز مرور المشرف (PIN)</h4>
+            <p class="text-xs text-slate-600">يُحفظ الرمز الجديد في قاعدة البيانات السحابية (<code class="font-mono text-navy">library_settings/admin</code>) لحماية لوحة الإدارة من أي جهاز.</p>
+            <form id="change-pin-form" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 max-w-md">
+              <input
+                id="new-pin-input"
+                type="password"
+                inputmode="numeric"
+                minlength="4"
+                maxlength="12"
+                placeholder="أدخل الرمز الجديد (4 أرقام فأكثر)"
+                required
+                class="flex-1 rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm font-mono focus:border-gold focus:outline-none bg-white"
+              />
+              <button
+                type="submit"
+                class="px-5 py-2.5 rounded-xl bg-gold hover:bg-gold-light text-navy-dark font-extrabold text-xs sm:text-sm transition-colors cursor-pointer"
+              >
+                حفظ الرمز الجديد
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== نافذة تأكيد الحذف المخصصة (Custom Confirm Modal) ==================== -->
+  <div id="confirm-modal" class="hidden fixed inset-0 z-[60] bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="modal-pop bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 text-center">
+      <div class="w-14 h-14 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center mx-auto mb-3">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+      </div>
+      <h4 class="text-lg font-extrabold text-navy">تأكيد حذف المرجع</h4>
+      <p id="confirm-modal-text" class="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
+        هل أنت متأكد من حذف هذا المرجع نهائياً من السحابة؟
+      </p>
+      <div class="flex items-center gap-2.5 mt-5">
+        <button
+          id="btn-confirm-yes"
+          type="button"
+          class="flex-1 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm transition-colors cursor-pointer"
+        >
+          نعم، احذف
+        </button>
+        <button
+          id="btn-confirm-no"
+          type="button"
+          class="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition-colors cursor-pointer"
+        >
+          إلغاء
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== حاوية الإشعارات الفورية (Toasts) ==================== -->
+  <div id="toast-container" class="fixed bottom-5 left-5 right-5 sm:right-auto sm:w-96 z-[70] pointer-events-none flex flex-col gap-2"></div>
+
+  <!-- ==================== المنطق البرمجي والربط السحابي الحي (Firebase v10.14.1) ==================== -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      doc,
+      addDoc,
+      setDoc,
+      updateDoc,
+      deleteDoc,
+      onSnapshot,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    // =========================================================================
+    // 1. إعدادات مشروع Firebase السحابي الخاص بك (tobruk-library)
+    // =========================================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyA8uXcT5FNTImV3u9r08u-mlMIAzzGg70A",
+      authDomain: "tobruk-library.firebaseapp.com",
+      projectId: "tobruk-library",
+      storageBucket: "tobruk-library.firebasestorage.app",
+      messagingSenderId: "956515973695",
+      appId: "1:956515973695:web:c5d23778bcd5f4c4fc568a",
+      measurementId: "G-0695YBM1N4"
+    };
+
+    // تهيئة خدمات Firebase فوراً عند تحميل الصفحة
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // =========================================================================
+    // 2. الأقسام العلمية الثمانية وأنواع المراجع لكلية الهندسة - جامعة طبرق
+    // =========================================================================
+    const DEPARTMENTS = [
+      { id: 'all', name: 'جميع الأقسام العلمية', short: 'جميع الأقسام', icon: '🏛️' },
+      { id: 'general', name: 'القسم العام (العلوم الأساسية)', short: 'القسم العام', icon: '📐' },
+      { id: 'mechanical', name: 'الهندسة الميكانيكية', short: 'الميكانيكية', icon: '⚙️' },
+      { id: 'mechatronics', name: 'هندسة الميكاترونكس', short: 'الميكاترونكس', icon: '🤖' },
+      { id: 'electrical', name: 'الهندسة الكهربائية والإلكترونية', short: 'الكهربائية', icon: '⚡' },
+      { id: 'civil', name: 'الهندسة المدنية', short: 'المدنية', icon: '🏗️' },
+      { id: 'architecture', name: 'الهندسة المعمارية', short: 'المعمارية', icon: '🏛️' },
+      { id: 'petroleum', name: 'الهندسة النفطية', short: 'النفطية', icon: '🛢️' },
+      { id: 'chemical', name: 'الهندسة الكيميائية', short: 'الكيميائية', icon: '🧪' }
+    ];
+
+    const RESOURCE_TYPES = [
+      { id: 'all', label: 'الكل', badgeClass: 'bg-slate-100 text-slate-700' },
+      { id: 'textbook', label: 'كتاب منهجي', badgeClass: 'bg-navy-soft text-navy border border-navy/20' },
+      { id: 'sheets', label: 'شيتات ومحاضرات', badgeClass: 'bg-gold-soft text-gold-dark border border-gold/30' },
+      { id: 'exams', label: 'امتحانات سابقة', badgeClass: 'bg-emerald-50 text-emerald-700 border border-emerald-200' },
+      { id: 'labs', label: 'معامل وتقارير', badgeClass: 'bg-purple-50 text-purple-700 border border-purple-200' }
+    ];
+
+    // باقة المراجع التمهيدية الأصيلة لأقسام كلية الهندسة - جامعة طبرق
+    const STARTER_BOOKS = [
+      {
+        id: 'starter-1',
+        department: 'general',
+        semester: 1,
+        type: 'textbook',
+        code: 'GS101',
+        courseName: 'التفاضل والتكامل 1 (رياضة 1)',
+        title: 'Calculus: Early Transcendentals (James Stewart)',
+        author: 'James Stewart • إعداد: قسم العلوم الأساسية',
+        url: 'https://drive.google.com',
+        notes: 'الكتاب المنهجي المعتمد لمقرر رياضة 1 لطلبة القسم العام شامل النهايات والتفاضل وتطبيقاته.',
+        createdAt: 1730000001000
+      },
+      {
+        id: 'starter-2',
+        department: 'general',
+        semester: 2,
+        type: 'sheets',
+        code: 'GS104',
+        courseName: 'الفيزياء العامة 2 (الكهرباء والمغناطيسية)',
+        title: 'شيتات ومحاضرات الفيزياء الهندسية 2 المحلولة',
+        author: 'د. عبدالحميد البرعصي',
+        url: 'https://drive.google.com',
+        notes: 'ملخصات شاملة ومسائل محلولة حول قانون كولوم، قانون جاوس، المكثفات، والمجالات المغناطيسية.',
+        createdAt: 1730000002000
+      },
+      {
+        id: 'starter-3',
+        department: 'electrical',
+        semester: 3,
+        type: 'textbook',
+        code: 'EE201',
+        courseName: 'تحليل الدوائر الكهربائية 1',
+        title: 'Fundamentals of Electric Circuits (Alexander & Sadiku)',
+        author: 'Charles K. Alexander • د. طارق المنفي',
+        url: 'https://drive.google.com',
+        notes: 'المرجع الأساسي لتحليل دوائر التيار المستمر ونظريات ثيفينين ونورتون والتراكب.',
+        createdAt: 1730000003000
+      },
+      {
+        id: 'starter-4',
+        department: 'mechanical',
+        semester: 4,
+        type: 'textbook',
+        code: 'ME201',
+        courseName: 'الديناميكا الحرارية الهندسية 1',
+        title: 'Thermodynamics: An Engineering Approach (Yunus Cengel)',
+        author: 'Yunus A. Cengel • د. إبراهيم الشلماني',
+        url: 'https://drive.google.com',
+        notes: 'المرجع الشامل لخصائص المواد النقية والقانون الأول والثاني للديناميكا الحرارية مع الجداول.',
+        createdAt: 1730000004000
+      },
+      {
+        id: 'starter-5',
+        department: 'mechatronics',
+        semester: 5,
+        type: 'labs',
+        code: 'MT302',
+        courseName: 'المتحكمات الدقيقة والأنظمة المدمجة',
+        title: 'دليل التجارب العملية لبرمجة المتحكمات الدقيقة وربط الحساسات',
+        author: 'م. عبدالرحمن سالم عمران',
+        url: 'https://drive.google.com',
+        notes: 'كراسة معمل الميكاترونكس لتصميم الدوائر المدمجة والتحكم بالمحركات والحساسات الصناعية.',
+        createdAt: 1730000005000
+      },
+      {
+        id: 'starter-6',
+        department: 'civil',
+        semester: 4,
+        type: 'sheets',
+        code: 'CE204',
+        courseName: 'ميكانيكا المواد ومقاومة المنشآت',
+        title: 'شيتات الإجهادات والانفعالات ومخططات القص والعزم',
+        author: 'د. عادل الفاخري',
+        url: 'https://drive.google.com',
+        notes: 'محاضرات وتمارين محلولة في تحليل الكمرات والأعمدة والالتواء في المقاطع الهندسية.',
+        createdAt: 1730000006000
+      },
+      {
+        id: 'starter-7',
+        department: 'architecture',
+        semester: 3,
+        type: 'sheets',
+        code: 'AR201',
+        courseName: 'أسس التصميم المعماري والإظهار الهندسي',
+        title: 'مذكرة التكوين المعماري والنسب والتشكيل الفراغي',
+        author: 'د. منى العوامي',
+        url: 'https://drive.google.com',
+        notes: 'مرجع بصري لطلبة العمارة حول تحليل المشاريع المعمارية وتخطيط المساقط والواجهات.',
+        createdAt: 1730000007000
+      },
+      {
+        id: 'starter-8',
+        department: 'petroleum',
+        semester: 6,
+        type: 'exams',
+        code: 'PE304',
+        courseName: 'هندسة المكامن النفطية (Reservoir Engineering)',
+        title: 'تجميعية امتحانات السنوات السابقة مع الحلول النموذجية',
+        author: 'د. فرج القطعاني',
+        url: 'https://drive.google.com',
+        notes: 'نماذج امتحانات نصفية ونهائية تغطي حسابات الاحتياطي النفطي ومعادلة توازن المواد.',
+        createdAt: 1730000008000
+      },
+      {
+        id: 'starter-9',
+        department: 'chemical',
+        semester: 5,
+        type: 'textbook',
+        code: 'CH301',
+        courseName: 'مبادئ العمليات الكيميائية',
+        title: 'Elementary Principles of Chemical Processes (Felder & Rousseau)',
+        author: 'Richard M. Felder • د. خالد الزوي',
+        url: 'https://drive.google.com',
+        notes: 'المرجع الرئيسي لموازنة الكتلة والطاقة في الوحدات الصناعية والمفاعلات الكيميائية.',
+        createdAt: 1730000009000
+      },
+      {
+        id: 'starter-10',
+        department: 'electrical',
+        semester: 7,
+        type: 'exams',
+        code: 'EE402',
+        courseName: 'تحليل أنظمة القوى الكهربائية',
+        title: 'امتحانات سابقة محلولة: سريان الأحمال والأعطال المتماثلة',
+        author: 'د. مفتاح العبيدي',
+        url: 'https://drive.google.com',
+        notes: 'حلول تفصيلية لمسائل الشبكات الكهربائية وتطبيقات طريقة نيوتن رافسون.',
+        createdAt: 1730000010000
+      },
+      {
+        id: 'starter-11',
+        department: 'civil',
+        semester: 8,
+        type: 'textbook',
+        code: 'CE412',
+        courseName: 'تصميم المنشآت الخرسانية المسلحة 2',
+        title: 'Design of Reinforced Concrete (Jack McCormac - ACI Code)',
+        author: 'Jack C. McCormac • د. يوسف بوغرارة',
+        url: 'https://drive.google.com',
+        notes: 'تصميم البلاطات ذات الاتجاهين، الأعمدة النحيفة، والأساسات وفق الكود الأمريكي.',
+        createdAt: 1730000011000
+      },
+      {
+        id: 'starter-12',
+        department: 'mechatronics',
+        semester: 9,
+        type: 'labs',
+        code: 'MT499',
+        courseName: 'مشروع التخرج الهندسي (Graduation Project)',
+        title: 'الدليل الموحد لإعداد وكتابة أطروحة مشروع التخرج - جامعة طبرق',
+        author: 'لجنة مشاريع التخرج • كلية الهندسة',
+        url: 'https://drive.google.com',
+        notes: 'القالب الرسمي المعتمد لتنسيق رسائل التخرج، الفصول البحثية، والمراجع العلمية.',
+        createdAt: 1730000012000
+      }
+    ];
+
+    // =========================================================================
+    // 3. حالة التطبيق (Application State)
+    // =========================================================================
+    const state = {
+      books: [...STARTER_BOOKS],
+      isStarterFallback: true,
+      cloudConnected: false,
+      selectedDept: 'all',
+      selectedSemester: 'all',
+      selectedType: 'all',
+      searchQuery: '',
+      sortBy: 'newest',
+      isAdminAuthenticated: false,
+      adminPin: '1991',
+      pendingDeleteId: null
+    };
+
+    // =========================================================================
+    // 4. أدوات الإشعارات والنسخ الآمن وتحديث شارة الحالة السحابية
+    // =========================================================================
+    function escapeHtml(value) {
+      if (value === null || value === undefined) return '';
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const styles = {
+        success: 'bg-navy text-white border-gold',
+        error: 'bg-red-700 text-white border-red-300',
+        info: 'bg-slate-800 text-white border-slate-400'
+      };
+      toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl shadow-xl border-r-4 text-xs sm:text-sm font-bold transition-all duration-300 ${styles[type] || styles.success}`;
+      toast.innerHTML = `<span class="flex-1">${escapeHtml(message)}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(8px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3400);
+    }
+
+    function copyTextToClipboard(text, successMessage) {
+      try {
+        const tempInput = document.createElement('textarea');
+        tempInput.value = text;
+        tempInput.setAttribute('readonly', '');
+        tempInput.style.position = 'fixed';
+        tempInput.style.opacity = '0';
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999);
+        const copied = document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        if (copied) {
+          showToast(successMessage, 'success');
+        } else {
+          showToast('تعذر النسخ التلقائي، يرجى نسخ الرابط يدوياً.', 'error');
+        }
+      } catch (_) {
+        showToast('حدث خطأ أثناء نسخ الرابط.', 'error');
+      }
+    }
+
+    function setCloudStatusConnected() {
+      state.cloudConnected = true;
+      const pill = document.getElementById('cloud-status-pill');
+      const dot = document.getElementById('cloud-status-dot');
+      const label = document.getElementById('cloud-status-label');
+
+      pill.className = 'flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-400/50 text-xs font-extrabold text-emerald-300 transition-all';
+      dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0';
+      label.textContent = 'متصل بالسحابة • تحديث لحظي';
+
+      document.getElementById('firebase-troubleshoot-banner').classList.add('hidden');
+    }
+
+    function setCloudStatusTroubleshooting(reasonText) {
+      state.cloudConnected = false;
+      const pill = document.getElementById('cloud-status-pill');
+      const dot = document.getElementById('cloud-status-dot');
+      const label = document.getElementById('cloud-status-label');
+
+      pill.className = 'flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-500/20 border border-amber-400/50 text-xs font-bold text-amber-200 transition-all';
+      dot.className = 'w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0';
+      label.textContent = 'وضع محلي • بانتظار تفعيل السحابة';
+
+      const banner = document.getElementById('firebase-troubleshoot-banner');
+      const stepsEl = document.getElementById('troubleshoot-steps');
+      if (reasonText) {
+        stepsEl.innerHTML = `${reasonText} — افتح <a href="https://console.firebase.google.com/project/tobruk-library" target="_blank" rel="noopener noreferrer" class="underline font-extrabold text-navy">لوحة تحكم مشروع tobruk-library</a> وتأكد من تفعيل <strong>Cloud Firestore (Test mode)</strong> وتفعيل <strong>Anonymous</strong> داخل قسم <strong>Authentication</strong>.`;
+      }
+      banner.classList.remove('hidden');
+    }
+
+    // =========================================================================
+    // 5. الاتصال اللحظي بقاعدة بيانات Firebase Firestore
+    // =========================================================================
+    let unsubscribeBooks = null;
+    let unsubscribeSettings = null;
+
+    async function initCloudSync() {
+      try {
+        // المصادقة المجهولة التلقائية
+        await signInAnonymously(auth);
+      } catch (authErr) {
+        console.warn('Anonymous Auth info:', authErr.code, authErr.message);
+        if (authErr.code === 'auth/operation-not-allowed' || authErr.code === 'auth/admin-restricted-operation') {
+          setCloudStatusTroubleshooting('ميزة الدخول المجهول (Anonymous Auth) غير مفعّلة بعد في Firebase');
+        }
+      }
+
+      // إلغاء أي مستمع سابق عند إعادة المحاولة
+      if (unsubscribeBooks) unsubscribeBooks();
+      if (unsubscribeSettings) unsubscribeSettings();
+
+      // الاشتراك اللحظي في مجموعة الكتب 'library_books'
+      const booksColRef = collection(db, 'library_books');
+      unsubscribeBooks = onSnapshot(
+        booksColRef,
+        (snapshot) => {
+          setCloudStatusConnected();
+
+          if (snapshot.empty) {
+            state.isStarterFallback = true;
+            state.books = [...STARTER_BOOKS];
+            document.getElementById('starter-mode-notice').classList.remove('hidden');
+          } else {
+            state.isStarterFallback = false;
+            document.getElementById('starter-mode-notice').classList.add('hidden');
+            const liveList = [];
+            snapshot.forEach((docSnap) => {
+              liveList.push({ id: docSnap.id, ...docSnap.data() });
+            });
+            state.books = liveList;
+          }
+
+          renderAll();
+        },
+        (error) => {
+          console.error('Firestore onSnapshot error:', error);
+          let msg = 'تعذر الوصول إلى قاعدة البيانات السحابية.';
+          if (error.code === 'permission-denied') {
+            msg = 'تم رفض الوصول بسبب قواعد الأمان (Firestore Rules) — تأكد من اختيار Start in test mode';
+          } else if (error.code === 'failed-precondition' || error.code === 'not-found') {
+            msg = 'قاعدة بيانات Cloud Firestore غير منشأة بعد في مشروع tobruk-library';
+          }
+          setCloudStatusTroubleshooting(msg);
+          renderAll();
+        }
+      );
+
+      // الاشتراك في إعدادات المشرف 'library_settings/admin' لقراءة رمز PIN المخصص
+      const adminDocRef = doc(db, 'library_settings', 'admin');
+      unsubscribeSettings = onSnapshot(
+        adminDocRef,
+        (docSnap) => {
+          if (docSnap.exists() && docSnap.data().pin) {
+            state.adminPin = String(docSnap.data().pin);
+          }
+        },
+        () => {
+          // تجاهل صامت إذا لم تُنشأ الوثيقة بعد، وسيعمل الرمز الافتراضي 1991
+        }
+      );
+    }
+
+    // =========================================================================
+    // 6. عمليات الإضافة والتعديل والحذف في Firestore
+    // =========================================================================
+    async function saveBookToFirestore(bookPayload, editId = null) {
+      const submitBtn = document.getElementById('btn-submit-resource');
+      submitBtn.disabled = true;
+
+      try {
+        if (editId && !editId.startsWith('starter-')) {
+          const docRef = doc(db, 'library_books', editId);
+          await updateDoc(docRef, {
+            ...bookPayload,
+            updatedAt: Date.now()
+          });
+          showToast('تم حفظ التعديلات سحابياً وتحديثها لجميع الطلبة!', 'success');
+        } else {
+          const colRef = collection(db, 'library_books');
+          await addDoc(colRef, {
+            ...bookPayload,
+            createdAt: Date.now(),
+            serverTimestamp: serverTimestamp()
+          });
+          showToast('تمت إضافة المرجع ونشره سحابياً بنجاح!', 'success');
+        }
+        return true;
+      } catch (err) {
+        console.error('Error saving book:', err);
+        showToast('تعذر الحفظ في السحابة: تأكد من تفعيل Cloud Firestore في وضع الاختبار.', 'error');
+        return false;
+      } finally {
+        submitBtn.disabled = false;
+      }
+    }
+
+    async function deleteBookFromFirestore(bookId) {
+      if (bookId.startsWith('starter-')) {
+        state.books = state.books.filter((b) => b.id !== bookId);
+        renderAll();
+        showToast('تمت إزالة المرجع التمهيدي من العرض.', 'info');
+        return;
+      }
+
+      try {
+        await deleteDoc(doc(db, 'library_books', bookId));
+        showToast('تم حذف المرجع نهائياً من السحابة.', 'success');
+      } catch (err) {
+        console.error('Error deleting book:', err);
+        showToast('حدث خطأ أثناء حذف المرجع من السحابة.', 'error');
+      }
+    }
+
+    async function uploadStarterBooksToCloud() {
+      const btn = document.getElementById('btn-upload-starter-books');
+      btn.disabled = true;
+      try {
+        showToast('جاري رفع 12 مرجعاً تمهيدياً إلى السحابة...', 'info');
+        const colRef = collection(db, 'library_books');
+        for (const item of STARTER_BOOKS) {
+          const { id, ...cleanBook } = item;
+          await addDoc(colRef, {
+            ...cleanBook,
+            createdAt: Date.now(),
+            serverTimestamp: serverTimestamp()
+          });
+        }
+        showToast('تم رفع جميع الكتب التمهيدية إلى السحابة وظهرت الآن لجميع الطلبة!', 'success');
+      } catch (err) {
+        console.error('Starter upload error:', err);
+        showToast('فشل الرفع السحابي: تأكد من تفعيل Cloud Firestore في وضع Test mode.', 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    // =========================================================================
+    // 7. التصفية والعرض الديناميكي (Rendering & Filtering)
+    // =========================================================================
+    function getFilteredBooks() {
+      const q = state.searchQuery.trim().toLowerCase();
+
+      const results = state.books.filter((book) => {
+        if (state.selectedDept !== 'all' && book.department !== state.selectedDept) return false;
+        if (state.selectedSemester !== 'all' && Number(book.semester) !== Number(state.selectedSemester)) return false;
+        if (state.selectedType !== 'all' && book.type !== state.selectedType) return false;
+
+        if (q) {
+          const searchable = [
+            book.code,
+            book.courseName,
+            book.title,
+            book.author,
+            book.notes
+          ]
+            .filter(Boolean)
+            .join(' ')
+            .toLowerCase();
+          if (!searchable.includes(q)) return false;
+        }
+        return true;
+      });
+
+      return results.sort((a, b) => {
+        if (state.sortBy === 'semester_asc') {
+          return Number(a.semester || 0) - Number(b.semester || 0);
+        }
+        if (state.sortBy === 'code_asc') {
+          return String(a.code || '').localeCompare(String(b.code || ''));
+        }
+        return Number(b.createdAt || 0) - Number(a.createdAt || 0);
+      });
+    }
+
+    function renderDepartments() {
+      const container = document.getElementById('departments-container');
+      container.innerHTML = DEPARTMENTS.map((dept) => {
+        const count =
+          dept.id === 'all'
+            ? state.books.length
+            : state.books.filter((b) => b.department === dept.id).length;
+        const isActive = state.selectedDept === dept.id;
+
+        return `
+          <button
+            type="button"
+            data-dept-id="${dept.id}"
+            class="dept-btn group flex items-center justify-between gap-2 px-3.5 py-3 rounded-2xl border text-right transition-all cursor-pointer ${
+              isActive
+                ? 'bg-navy text-white border-navy shadow-md ring-2 ring-gold/70'
+                : 'bg-white hover:bg-navy-soft text-slate-800 border-slate-200/90 hover:border-navy/30'
+            }"
+          >
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="text-base shrink-0">${dept.icon}</span>
+              <span class="text-xs sm:text-[13px] font-bold truncate">${escapeHtml(dept.short)}</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[11px] font-mono font-extrabold shrink-0 ${
+              isActive ? 'bg-gold text-navy-dark' : 'bg-slate-100 text-slate-600 group-hover:bg-white'
+            }">
+              ${count}
+            </span>
+          </button>
+        `;
+      }).join('');
+
+      container.querySelectorAll('.dept-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.selectedDept = btn.dataset.deptId;
+          renderAll();
+        });
+      });
+    }
+
+    function renderSemesters() {
+      const container = document.getElementById('semesters-container');
+      const scopedBooks =
+        state.selectedDept === 'all'
+          ? state.books
+          : state.books.filter((b) => b.department === state.selectedDept);
+
+      const semesters = [
+        { id: 'all', label: 'الكل' },
+        { id: '1', label: 'السمستر 1' },
+        { id: '2', label: 'السمستر 2' },
+        { id: '3', label: 'السمستر 3' },
+        { id: '4', label: 'السمستر 4' },
+        { id: '5', label: 'السمستر 5' },
+        { id: '6', label: 'السمستر 6' },
+        { id: '7', label: 'السمستر 7' },
+        { id: '8', label: 'السمستر 8' },
+        { id: '9', label: 'السمستر 9 (التخرج)' }
+      ];
+
+      container.innerHTML = semesters
+        .map((sem) => {
+          const count =
+            sem.id === 'all'
+              ? scopedBooks.length
+              : scopedBooks.filter((b) => Number(b.semester) === Number(sem.id)).length;
+          const isActive = String(state.selectedSemester) === String(sem.id);
+
+          return `
+            <button
+              type="button"
+              data-sem-id="${sem.id}"
+              class="sem-btn flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap border transition-all cursor-pointer ${
+                isActive
+                  ? 'bg-gold text-navy-dark border-gold shadow-sm font-extrabold'
+                  : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
+              }"
+            >
+              <span>${sem.label}</span>
+              <span class="px-1.5 py-0.2 rounded-md text-[10px] font-mono font-extrabold ${
+                isActive ? 'bg-navy text-white' : 'bg-white text-slate-500 border border-slate-200'
+              }">${count}</span>
+            </button>
+          `;
+        })
+        .join('');
+
+      container.querySelectorAll('.sem-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.selectedSemester = btn.dataset.semId;
+          renderAll();
+        });
+      });
+    }
+
+    function renderTypes() {
+      const container = document.getElementById('types-container');
+      container.innerHTML = RESOURCE_TYPES.map((t) => {
+        const isActive = state.selectedType === t.id;
+        return `
+          <button
+            type="button"
+            data-type-id="${t.id}"
+            class="type-btn px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap border transition-all cursor-pointer ${
+              isActive
+                ? 'bg-navy text-white border-navy shadow-sm'
+                : 'bg-white hover:bg-slate-50 text-slate-600 border-slate-200'
+            }"
+          >
+            ${t.label}
+          </button>
+        `;
+      }).join('');
+
+      container.querySelectorAll('.type-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.selectedType = btn.dataset.typeId;
+          renderAll();
+        });
+      });
+    }
+
+    function renderBooksGrid() {
+      const grid = document.getElementById('books-grid');
+      const emptyState = document.getElementById('empty-state');
+      const filtered = getFilteredBooks();
+
+      document.getElementById('stat-total-books').textContent = state.books.length;
+      document.getElementById('results-count-badge').textContent = filtered.length;
+
+      // تحديث عنوان القسم والسمستر المعروض
+      const activeDept = DEPARTMENTS.find((d) => d.id === state.selectedDept);
+      let heading = activeDept && activeDept.id !== 'all' ? activeDept.name : 'جميع المراجع الهندسية';
+      if (state.selectedSemester !== 'all') {
+        heading += Number(state.selectedSemester) === 9 ? ' — السمستر 9 (التخرج)' : ` — السمستر ${state.selectedSemester}`;
+      }
+      document.getElementById('results-heading').textContent = heading;
+
+      // إظهار أو إخفاء زر إعادة ضبط الفلاتر
+      const hasFilters =
+        state.selectedDept !== 'all' ||
+        state.selectedSemester !== 'all' ||
+        state.selectedType !== 'all' ||
+        state.searchQuery.trim() !== '';
+      const resetBtn = document.getElementById('btn-reset-filters');
+      if (hasFilters) {
+        resetBtn.classList.remove('hidden');
+        resetBtn.classList.add('inline-flex');
+      } else {
+        resetBtn.classList.add('hidden');
+        resetBtn.classList.remove('inline-flex');
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      grid.innerHTML = filtered
+        .map((book) => {
+          const deptObj = DEPARTMENTS.find((d) => d.id === book.department) || { short: 'عام', icon: '📘' };
+          const typeObj = RESOURCE_TYPES.find((t) => t.id === book.type) || RESOURCE_TYPES[1];
+          const semBadge = Number(book.semester) === 9 ? 'السمستر 9 (التخرج)' : `السمستر ${book.semester}`;
+          const courseTitle = book.courseName || book.title;
+          const subBookTitle = book.courseName && book.title && book.courseName !== book.title ? book.title : '';
+
+          return `
+            <article class="book-card bg-white rounded-3xl border border-slate-200/90 p-5 flex flex-col justify-between relative overflow-hidden">
+              <div class="absolute top-0 right-0 left-0 h-1.5 bg-gradient-to-l from-navy via-navy-light to-gold"></div>
+
+              <div>
+                <!-- الشارات العلوية: رمز المادة + السمستر + نوع المرجع -->
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pt-1">
+                  <div class="flex items-center gap-1.5">
+                    <span class="px-2.5 py-1 rounded-lg bg-navy text-gold-light font-mono text-xs font-extrabold tracking-wider">
+                      ${escapeHtml(book.code || 'ENG')}
+                    </span>
+                    <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold">
+                      ${semBadge}
+                    </span>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-lg text-[11px] font-extrabold ${typeObj.badgeClass}">
+                    ${typeObj.label}
+                  </span>
+                </div>
+
+                <!-- وسم القسم الهندسي -->
+                <div class="text-xs font-bold text-gold-dark mb-1.5 flex items-center gap-1">
+                  <span>${deptObj.icon}</span>
+                  <span>${escapeHtml(deptObj.short)}</span>
+                </div>
+
+                <!-- اسم المقرر وعنوان الكتاب -->
+                <h4 class="text-base sm:text-lg font-black text-navy leading-snug">
+                  ${escapeHtml(courseTitle)}
+                </h4>
+                ${
+                  subBookTitle
+                    ? `<p class="text-xs sm:text-[13px] font-bold text-slate-700 mt-1 leading-snug">${escapeHtml(subBookTitle)}</p>`
+                    : ''
+                }
+
+                <!-- المؤلف / الدكتور -->
+                ${
+                  book.author
+                    ? `<div class="flex items-center gap-1.5 text-xs font-semibold text-slate-600 mt-2.5">
+                        <svg class="w-4 h-4 text-gold shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        <span>${escapeHtml(book.author)}</span>
+                      </div>`
+                    : ''
+                }
+
+                <!-- الوصف والملاحظات -->
+                <p class="text-xs text-slate-500 leading-relaxed mt-2.5 mb-4 line-clamp-3">
+                  ${escapeHtml(book.notes || 'مرجع أكاديمي معتمد لطلبة كلية الهندسة - جامعة طبرق.')}
+                </p>
+              </div>
+
+              <!-- أزرار الفتح والنسخ -->
+              <div class="pt-3 border-t border-slate-100 flex items-center gap-2">
+                <a
+                  href="${escapeHtml(book.url)}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-navy hover:bg-navy-light text-white text-xs sm:text-sm font-extrabold shadow-sm hover:shadow transition-all"
+                >
+                  <span>فتح / تحميل المرجع</span>
+                  <svg class="w-4 h-4 text-gold-light shrink-0" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+
+                <button
+                  type="button"
+                  data-copy-url="${escapeHtml(book.url)}"
+                  class="copy-link-btn inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer shrink-0"
+                  title="نسخ الرابط"
+                >
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  <span class="hidden sm:inline">نسخ الرابط</span>
+                </button>
+              </div>
+            </article>
+          `;
+        })
+        .join('');
+
+      grid.querySelectorAll('.copy-link-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          copyTextToClipboard(btn.dataset.copyUrl, 'تم نسخ رابط المرجع بنجاح!');
+        });
+      });
+    }
+
+    function renderAdminList() {
+      const container = document.getElementById('admin-resources-list');
+      const countBadge = document.getElementById('admin-manage-count');
+      if (!container || !countBadge) return;
+
+      countBadge.textContent = state.books.length;
+      const q = (document.getElementById('admin-search-input')?.value || '').trim().toLowerCase();
+
+      const filtered = state.books.filter((b) => {
+        if (!q) return true;
+        return (
+          (b.courseName || '').toLowerCase().includes(q) ||
+          (b.title || '').toLowerCase().includes(q) ||
+          (b.code || '').toLowerCase().includes(q) ||
+          (b.author || '').toLowerCase().includes(q)
+        );
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="text-center py-8 text-xs text-slate-500">لا توجد مراجع مطابقة.</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered
+        .map((book) => {
+          const deptObj = DEPARTMENTS.find((d) => d.id === book.department) || { short: 'عام' };
+          const isStarter = String(book.id).startsWith('starter-');
+          return `
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="px-2 py-0.5 rounded bg-navy text-gold-light font-mono text-[11px] font-bold">${escapeHtml(book.code)}</span>
+                  <span class="text-xs font-bold text-gold-dark">${escapeHtml(deptObj.short)} • السمستر ${escapeHtml(book.semester)}</span>
+                  ${isStarter ? '<span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 text-[10px] font-bold">تمهيدي محلي</span>' : '<span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold">سحابي حي</span>'}
+                </div>
+                <p class="text-sm font-extrabold text-navy truncate mt-1">${escapeHtml(book.courseName || book.title)}</p>
+                <p class="text-xs text-slate-600 truncate">${escapeHtml(book.title)}</p>
+              </div>
+
+              <div class="flex items-center gap-2 shrink-0 self-end sm:self-center">
+                <button
+                  type="button"
+                  data-edit-id="${escapeHtml(book.id)}"
+                  class="admin-edit-btn px-3.5 py-2 rounded-xl bg-white hover:bg-navy-soft text-navy border border-slate-300 text-xs font-bold transition-colors cursor-pointer"
+                >
+                  تعديل
+                </button>
+                <button
+                  type="button"
+                  data-delete-id="${escapeHtml(book.id)}"
+                  data-delete-title="${escapeHtml(book.courseName || book.title)}"
+                  class="admin-delete-btn px-3.5 py-2 rounded-xl bg-red-50 hover:bg-red-600 text-red-600 hover:text-white border border-red-200 text-xs font-bold transition-colors cursor-pointer"
+                >
+                  حذف
+                </button>
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+
+      container.querySelectorAll('.admin-edit-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const item = state.books.find((b) => b.id === btn.dataset.editId);
+          if (!item) return;
+          populateEditForm(item);
+          switchAdminTab('form');
+        });
+      });
+
+      container.querySelectorAll('.admin-delete-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.pendingDeleteId = btn.dataset.deleteId;
+          document.getElementById('confirm-modal-text').textContent =
+            `هل أنت متأكد من حذف «${btn.dataset.deleteTitle}» نهائياً من السحابة؟`;
+          document.getElementById('confirm-modal').classList.remove('hidden');
+        });
+      });
+    }
+
+    function renderAll() {
+      renderDepartments();
+      renderSemesters();
+      renderTypes();
+      renderBooksGrid();
+      renderAdminList();
+    }
+
+    // =========================================================================
+    // 8. إدارة النماذج والنوافذ المنبثقة (Modals & Events)
+    // =========================================================================
+    function populateDepartmentsDropdown() {
+      const select = document.getElementById('res-dept');
+      select.innerHTML = DEPARTMENTS.filter((d) => d.id !== 'all')
+        .map((d) => `<option value="${d.id}">${escapeHtml(d.name)}</option>`)
+        .join('');
+    }
+
+    function switchAdminTab(tabKey) {
+      document.querySelectorAll('.admin-tab-panel').forEach((panel) => panel.classList.add('hidden'));
+      document.getElementById(`admin-tab-${tabKey}`).classList.remove('hidden');
+
+      document.querySelectorAll('.admin-tab-btn').forEach((btn) => {
+        const isCurrent = btn.dataset.adminTab === tabKey;
+        btn.className = isCurrent
+          ? 'admin-tab-btn px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-extrabold bg-white text-navy border-t-2 border-gold shadow-sm whitespace-nowrap cursor-pointer'
+          : 'admin-tab-btn px-4 py-2.5 rounded-t-xl text-xs sm:text-sm font-bold text-slate-600 hover:text-navy whitespace-nowrap cursor-pointer';
+      });
+    }
+
+    function resetBookForm() {
+      document.getElementById('resource-form').reset();
+      document.getElementById('edit-resource-id').value = '';
+      document.getElementById('form-mode-title').textContent = 'إضافة كتاب أو شيت جديد إلى السحابة';
+      document.getElementById('btn-submit-label').textContent = 'نشر المرجع في السحابة الآن';
+      document.getElementById('btn-cancel-edit').classList.add('hidden');
+    }
+
+    function populateEditForm(book) {
+      document.getElementById('edit-resource-id').value = book.id;
+      document.getElementById('res-dept').value = book.department || 'general';
+      document.getElementById('res-semester').value = String(book.semester || '1');
+      document.getElementById('res-type').value = book.type || 'textbook';
+      document.getElementById('res-code').value = book.code || '';
+      document.getElementById('res-course-name').value = book.courseName || book.title || '';
+      document.getElementById('res-title').value = book.title || '';
+      document.getElementById('res-author').value = book.author || '';
+      document.getElementById('res-url').value = book.url || '';
+      document.getElementById('res-notes').value = book.notes || '';
+
+      document.getElementById('form-mode-title').textContent = `تعديل المرجع: ${book.courseName || book.title}`;
+      document.getElementById('btn-submit-label').textContent = 'حفظ التعديلات في السحابة';
+      document.getElementById('btn-cancel-edit').classList.remove('hidden');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      populateDepartmentsDropdown();
+      renderAll();
+
+      // 1. البحث الفوري والترتيب وإعادة الضبط
+      const searchInput = document.getElementById('search-input');
+      const clearSearchBtn = document.getElementById('btn-clear-search');
+
+      searchInput.addEventListener('input', (e) => {
+        state.searchQuery = e.target.value;
+        clearSearchBtn.classList.toggle('hidden', !state.searchQuery.trim());
+        renderBooksGrid();
+      });
+
+      clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        state.searchQuery = '';
+        clearSearchBtn.classList.add('hidden');
+        renderBooksGrid();
+      });
+
+      document.getElementById('sort-select').addEventListener('change', (e) => {
+        state.sortBy = e.target.value;
+        renderBooksGrid();
+      });
+
+      const resetAll = () => {
+        state.selectedDept = 'all';
+        state.selectedSemester = 'all';
+        state.selectedType = 'all';
+        state.searchQuery = '';
+        searchInput.value = '';
+        clearSearchBtn.classList.add('hidden');
+        renderAll();
+      };
+
+      document.getElementById('btn-reset-filters').addEventListener('click', resetAll);
+      document.getElementById('btn-empty-reset').addEventListener('click', resetAll);
+
+      // 2. تنبيه Firebase وإعادة الفحص
+      document.getElementById('btn-retry-cloud').addEventListener('click', () => {
+        showToast('جاري إعادة فحص الاتصال السحابي...', 'info');
+        initCloudSync();
+      });
+      document.getElementById('btn-dismiss-troubleshoot').addEventListener('click', () => {
+        document.getElementById('firebase-troubleshoot-banner').classList.add('hidden');
+      });
+
+      // 3. فتح لوحة المشرف ونموذج PIN
+      document.getElementById('btn-open-admin').addEventListener('click', () => {
+        if (state.isAdminAuthenticated) {
+          document.getElementById('admin-modal').classList.remove('hidden');
+        } else {
+          document.getElementById('pin-error-msg').classList.add('hidden');
+          document.getElementById('admin-pin-input').value = '';
+          document.getElementById('pin-modal').classList.remove('hidden');
+          setTimeout(() => document.getElementById('admin-pin-input').focus(), 80);
+        }
+      });
+
+      document.getElementById('btn-close-pin').addEventListener('click', () => {
+        document.getElementById('pin-modal').classList.add('hidden');
+      });
+      document.getElementById('btn-cancel-pin').addEventListener('click', () => {
+        document.getElementById('pin-modal').classList.add('hidden');
+      });
+
+      document.getElementById('pin-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const entered = document.getElementById('admin-pin-input').value.trim();
+        if (entered === state.adminPin) {
+          state.isAdminAuthenticated = true;
+          document.getElementById('pin-modal').classList.add('hidden');
+          document.getElementById('admin-modal').classList.remove('hidden');
+          document.getElementById('admin-lock-icon').innerHTML = `
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+          `;
+          showToast('أهلاً بك م. عبدالرحمن في لوحة إدارة المكتبة السحابية!', 'success');
+        } else {
+          document.getElementById('pin-error-msg').classList.remove('hidden');
+        }
+      });
+
+      document.getElementById('btn-close-admin').addEventListener('click', () => {
+        document.getElementById('admin-modal').classList.add('hidden');
+      });
+
+      document.getElementById('btn-admin-logout').addEventListener('click', () => {
+        state.isAdminAuthenticated = false;
+        document.getElementById('admin-modal').classList.add('hidden');
+        document.getElementById('admin-lock-icon').innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        `;
+        showToast('تم قفل جلسة المشرف.', 'info');
+      });
+
+      // 4. تبويبات لوحة الإدارة
+      document.querySelectorAll('.admin-tab-btn').forEach((btn) => {
+        btn.addEventListener('click', () => switchAdminTab(btn.dataset.adminTab));
+      });
+
+      // 5. حفظ أو تعديل مرجع في Firestore
+      document.getElementById('resource-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const editId = document.getElementById('edit-resource-id').value.trim() || null;
+
+        const payload = {
+          department: document.getElementById('res-dept').value,
+          semester: Number(document.getElementById('res-semester').value),
+          type: document.getElementById('res-type').value,
+          code: document.getElementById('res-code').value.trim().toUpperCase(),
+          courseName: document.getElementById('res-course-name').value.trim(),
+          title: document.getElementById('res-title').value.trim(),
+          author: document.getElementById('res-author').value.trim(),
+          url: document.getElementById('res-url').value.trim(),
+          notes: document.getElementById('res-notes').value.trim()
+        };
+
+        const saved = await saveBookToFirestore(payload, editId);
+        if (saved) {
+          resetBookForm();
+        }
+      });
+
+      document.getElementById('btn-cancel-edit').addEventListener('click', resetBookForm);
+
+      // 6. بحث الإدارة وزر رفع الكتب التمهيدية
+      document.getElementById('admin-search-input').addEventListener('input', renderAdminList);
+      document.getElementById('btn-upload-starter-books').addEventListener('click', uploadStarterBooksToCloud);
+
+      // 7. تأكيد الحذف
+      document.getElementById('btn-confirm-no').addEventListener('click', () => {
+        state.pendingDeleteId = null;
+        document.getElementById('confirm-modal').classList.add('hidden');
+      });
+
+      document.getElementById('btn-confirm-yes').addEventListener('click', async () => {
+        const targetId = state.pendingDeleteId;
+        state.pendingDeleteId = null;
+        document.getElementById('confirm-modal').classList.add('hidden');
+        if (targetId) {
+          await deleteBookFromFirestore(targetId);
+        }
+      });
+
+      // 8. التصدير والاستيراد الجماعي JSON
+      document.getElementById('btn-export-json').addEventListener('click', () => {
+        const jsonString = JSON.stringify(state.books, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `tobruk-library-backup-${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showToast('تم تنزيل النسخة الاحتياطية JSON بنجاح.', 'success');
+      });
+
+      document.getElementById('input-import-json').addEventListener('change', async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        try {
+          const text = await file.text();
+          const list = JSON.parse(text);
+          if (!Array.isArray(list)) {
+            throw new Error('صيغة الملف غير صحيحة.');
+          }
+          let uploaded = 0;
+          for (const item of list) {
+            if (item && (item.title || item.courseName) && item.url) {
+              await saveBookToFirestore({
+                department: item.department || 'general',
+                semester: Number(item.semester || 1),
+                type: item.type || 'textbook',
+                code: String(item.code || 'ENG').toUpperCase(),
+                courseName: String(item.courseName || item.title),
+                title: String(item.title || item.courseName),
+                author: String(item.author || item.doctor || ''),
+                url: String(item.url),
+                notes: String(item.notes || item.description || '')
+              });
+              uploaded++;
+            }
+          }
+          showToast(`تم استيراد ورفع ${uploaded} مرجعاً إلى السحابة!`, 'success');
+        } catch (err) {
+          showToast('فشل استيراد الملف: ' + (err.message || ''), 'error');
+        } finally {
+          e.target.value = '';
+        }
+      });
+
+      // 9. تغيير رمز مرور المشرف في Firestore
+      document.getElementById('change-pin-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newPin = document.getElementById('new-pin-input').value.trim();
+        if (newPin.length < 4) {
+          showToast('يجب أن يتكون الرمز من 4 أرقام على الأقل.', 'error');
+          return;
+        }
+        try {
+          await setDoc(doc(db, 'library_settings', 'admin'), {
+            pin: newPin,
+            updatedAt: Date.now()
+          }, { merge: true });
+          state.adminPin = newPin;
+          document.getElementById('new-pin-input').value = '';
+          showToast('تم تحديث رمز مرور المشرف وحفظه في السحابة بنجاح!', 'success');
+        } catch (err) {
+          console.error('PIN save error:', err);
+          showToast('تعذر حفظ الرمز في السحابة: تأكد من تفعيل Cloud Firestore.', 'error');
+        }
+      });
+
+      // بدء المزامنة السحابية الحية فوراً
+      initCloudSync();
+    });
+  </script>
+</body>
+</html>
